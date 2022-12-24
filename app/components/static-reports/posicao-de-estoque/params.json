@@ -1,0 +1,135 @@
+{
+    "id": "staticPosicaoDeEstoque",
+    "title": "Posição de estoque por produto com custo",
+    "fields": [
+        {
+            "columnName": "Tipo",
+            "dataType": "char",
+            "label": "Tipo",
+            "displayFormat": "",
+            "width": 0,
+            "visible": false
+        },
+        {
+            "columnName": "Produto",
+            "dataType": "char",
+            "label": "Produto",
+            "displayFormat": "",
+            "width": 25,
+            "visible": true
+        },
+        {
+            "columnName": "Descrição",
+            "dataType": "char",
+            "label": "Descrição",
+            "displayFormat": "",
+            "width": 50,
+            "visible": true
+        },
+        {
+            "columnName": "Unidade",
+            "dataType": "char",
+            "label": "Unidade",
+            "displayFormat": "",
+            "width": 10,
+            "visible": true
+        },
+        {
+            "columnName": "Físico",
+            "dataType": "float",
+            "label": "Físico",
+            "displayFormat": "#,##0.####",
+            "width": 14,
+            "visible": true
+        },
+        {
+            "columnName": "Custo unit.",
+            "dataType": "float",
+            "label": "Custo unit.",
+            "displayFormat": "#,##0.00",
+            "width": 12,
+            "visible": true
+        },
+        {
+            "columnName": "Custo",
+            "dataType": "float",
+            "label": "Custo",
+            "displayFormat": "#,##0.00",
+            "width": 14,
+            "visible": true
+        },
+        {
+            "columnName": "Disponível",
+            "dataType": "float",
+            "label": "Disponível",
+            "displayFormat": "#,##0.####",
+            "width": 14,
+            "visible": false
+        }
+    ],
+    "headLines": [
+        "&<EMPRESA>",
+        "Posição de estoque por produto com custo"
+    ],
+    "aggregators": [
+        {
+            "type": "agSum",
+            "columnName": "Custo"
+        }
+    ],
+    "aggregatorsVisible": true,
+    "grouping": {
+        "columns": [
+            "Tipo"
+        ],
+        "headLines": [
+            "==============================",
+            "Tipo: <Tipo>",
+            "=============================="
+        ],
+        "aggregatorsVisible": true
+    },
+    "dialogParams": [
+        {
+            "type": "ptCheckBox",
+            "name": {
+                "from": "liberados",
+                "to": ""
+            },
+            "caption": "Lotes liberados",
+            "suggestion": {
+                "from": "S*",
+                "to": ""
+            },
+            "width": 0,
+            "numberFormat": "",
+            "checkBoxOptions": {
+                "valueChecked": "S",
+                "valueUnchecked": "N",
+                "checked": true
+            },
+            "radioGroupOptions": {}
+        },
+        {
+            "type": "ptCheckBox",
+            "name": {
+                "from": "quarentena",
+                "to": ""
+            },
+            "caption": "Lotes em quarentena",
+            "suggestion": {
+                "from": "S",
+                "to": ""
+            },
+            "width": 0,
+            "numberFormat": "",
+            "checkBoxOptions": {
+                "valueChecked": "S",
+                "valueUnchecked": "N",
+                "checked": false
+            },
+            "radioGroupOptions": {}
+        }
+    ],
+    "companyInfo": {}
+}

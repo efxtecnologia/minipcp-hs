@@ -1,0 +1,37 @@
+{
+    "name": "minipcp-desktop-server",
+    "version": "1.0.0",
+    "description": "Local webserver that extends MiniPCP functionalities",
+    "main": "server.js",
+    "bin": "server.js",
+    "scripts": {
+        "test": "jest"
+    },
+    "author": "hbolzan",
+    "license": "ISC",
+    "dependencies": {
+        "cookie-parser": "^1.4.6",
+        "cors": "^2.8.5",
+        "csv-parse": "^5.3.2",
+        "express": "^4.17.1",
+        "express-bearer-token": "^2.4.0",
+        "express-fileupload": "^1.4.0",
+        "jschardet": "^3.0.0",
+        "jsonwebtoken": "^8.5.1",
+        "lodash": "^4.17.21",
+        "moment": "^2.29.1",
+        "pg": "^8.7.1",
+        "yargs": "^17.1.1"
+    },
+    "pkg": {
+        "assets": "./public/**/*"
+    },
+    "devDependencies": {
+        "jest": "^27.5.1"
+    },
+    "jest": {
+        "moduleNameMapper": {
+            "^csv-parse/sync": "<rootDir>/node_modules/csv-parse/dist/cjs/sync.cjs"
+        }
+    }
+}

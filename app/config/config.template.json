@@ -1,0 +1,17 @@
+{
+    "auth": {
+        "jwtExpirySeconds": 300,
+        "jwtKey": "my-key"
+    },
+    "databases": {
+        "default": {
+            "user": "postgres",
+            "host": "localhost",
+            "database": "minipcp",
+            "password": "your-password",
+            "port": 5432
+        }
+    },
+    "serverPort": 3000,
+    "staticRoot": "./public"
+}
