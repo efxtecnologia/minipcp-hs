@@ -6,6 +6,18 @@ MiniPCP HS (for Hybrid Server), formerly MiniPCP Desktop Server, is a transition
 
 Currently, the server acts as a BFF, and as an application server. But it can be easily split in multiple services in the future.
 
+Although it is a monolith, each feature lives in its own repository, so features can be developed independently from each other.
+
+## Development
+* Inside your projects folder, clone this repository: `git clone https://github.com/efxtecnologia/minipcp-hs.git`
+* CD into features folder: `cd ./minipcp-hs/app/features`
+* Get the base features repository: `git clone  https://github.com/efxtecnologia/minipcp-hs-base-features.git`
+* Rename `features.template.js` to `features.js`: `mv features.template.js features.js`
+* Install other features you have access to
+* Get back to the main app folder: `cd ..`
+* Install yarn modules: `yarn install`
+* Run the server: `node server.js`
+
 ## Reports
 The reports server depends a lot on frontend parsing, because of the original conception of the server. It takes MiniPCP reports definitions and adapts them to return json objects. New report sources may be added, including static sources that could be added to this server. The logic that converts MiniPCP reports definitions into JS obects is all inside `app/logic/reports.js` file.
 
@@ -16,7 +28,6 @@ TBD
 
 ### Writing a static report
 TBD
-
 
 ## Features
 Feature is a functionality rendered by the server. All presentation and business logic run on the server. A client should parse and render the feature, and then assign actions to controls.
