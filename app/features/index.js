@@ -1,18 +1,8 @@
 const { allowed } = require("./logic/index.js"),
-      SessionControl = require("./session-control/index.js"),
-      ChangePassword = require("./change-password/index.js"),
-      Pipeline = require("./pipeline/index.js"),
-      UnionSalesOrderImport = require("./custom/union/sales-order-import/index.js"),
-      PriceLists = require("./price-lists/index.js");
+      allFeatures = require("./features.js");
 
 function FeaturesIndex(components) {
-    const features = [
-              SessionControl(components),
-              ChangePassword(components),
-              PriceLists(components),
-              Pipeline(components),
-              UnionSalesOrderImport(components),
-          ];
+    const features = allFeatures(components);
 
     const actions = features.reduce((actions, feature) => actions.concat(feature.actions || []), []);
 

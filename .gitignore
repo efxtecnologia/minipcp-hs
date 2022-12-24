@@ -3,11 +3,12 @@ node_modules
 config.json
 public
 hybrid-server.exe
-features/custom
-features/poc
+app/features/features.js
+app/features/base
 app/features/standard
 app/features/poc
 app/features/custom
+app/test/features/base
 app/test/features/standard
 app/test/features/poc
 app/test/features/custom
