@@ -8,7 +8,10 @@
 mv ./public/frontend/dist ./_dist
 mkdir ./public/frontend/dist
 cp -r _dist/* ./public/frontend/dist/.
-docker build . -t efxtecnologia/minipcp-hs
+
+docker build --build-arg USER=$DOCKER_USER_ID -t "${DOCKER_USER_ID}/minipcp-hs:latest"
+docker push "${DOCKER_USER_ID}/minipcp-hs:latest"
+
 rm -rf ./public/frontend/dist
 mv ./_dist ./dist
 mv ./dist ./public/frontend/.

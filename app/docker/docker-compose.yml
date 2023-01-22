@@ -1,0 +1,30 @@
+version: "3"
+
+# Environment variables are defined at .env
+
+services:
+  # main application
+  api:
+    environment:
+      - DOCKERIZED=${DOCKERIZED}
+      - DEBUG=${DEBUG}
+      - SERVER_PORT=${SERVER_PORT}
+      - STATIC_ROOT=${STATIC_ROOT}
+      - AUTH__JWT_EXPIRY_SECONDS=${JWT_EXPIRY_SECONDS}
+      - AUTH__JWT_KEY=${JWT_KEY}
+      - DATABASES__DEFAULT__USER=${DB_DEFAULT_USER}
+      - DATABASES__DEFAULT__HOST=${DB_DEFAULT_HOST}
+      - DATABASES__DEFAULT__PORT=${DB_DEFAULT_PORT}
+      - DATABASES__DEFAULT__DATABASE=${DB_DEFAULT_DB}
+      - DATABASES__DEFAULT__PASSWORD=${DB_DEFAULT_PWD}
+    image: "hbolzan/minipcp-hs:latest"
+    ports:
+      - "${SERVER_PORT}"
+    # debugging entrypoint - uncomment to debug
+    # entrypoint: ["sh", "-c", "sleep 2073600"]
+    networks:
+      - xdb
+
+networks:
+  xdb:
+    external: true
