@@ -1,7 +1,7 @@
 {
-    "name": "minipcp-desktop-server",
+    "name": "minipcp-hs",
     "version": "1.0.0",
-    "description": "Local webserver that extends MiniPCP functionalities",
+    "description": "MiniPCP Hybrid Server",
     "main": "server.js",
     "bin": "server.js",
     "scripts": {
