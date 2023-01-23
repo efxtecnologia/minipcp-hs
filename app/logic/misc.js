@@ -3,6 +3,13 @@ function tap(x) {
     return x;
 }
 
+function debug(x, config) {
+    if ( config.debug ) {
+        return tap(x);
+    }
+    return x;
+}
+
 function trimLeft(s, chars) {
     function doTrim(a) {
         if ( a.length > 0 && chars.includes(a[0]) ) {
@@ -67,6 +74,7 @@ const identity = x => x,
 
 module.exports = {
     tap,
+    debug,
     identity,
     constantly,
     trimLeft,

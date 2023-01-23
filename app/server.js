@@ -12,8 +12,14 @@ function Server() {
 
         updater.doUpdate();
 
-        app.listen(port, "0.0.0.0", () => {
-            console.log(`Listening at http//localhost:${ port }`);
+        app.listen(port, () => {
+            if ( components.config.dockerized ) {
+                console.log("We are running inside a container");
+            }
+            if ( components.config.debug ) {
+                console.log(components.config.config);
+            }
+            console.log(`Listening at http//localhost:${port}`);
         });
     }
 

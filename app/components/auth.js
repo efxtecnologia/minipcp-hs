@@ -1,4 +1,5 @@
-const { authToken } = require("../logic/auth.js");
+const { authToken } = require("../logic/auth.js"),
+      { debug } = require("../logic/misc.js");
 
 const noAuthUrls = [
     "/version",
@@ -65,8 +66,11 @@ function Auth({ crypto, jwt, db, config }) {
               fingerPrint = tokenParts[1] || "";
 
         try {
+            debug(token, config);
             req.auth = { ...jwt.verify(token, jwtKey + fingerPrint), fingerPrint };
+            debug(req.auth, config);
         } catch(e) {
+
 		        if (e instanceof jwt.JsonWebTokenError || e instanceof jwt.TokenExpiredError) {
 			          return res.status(401).end();
 		        }
