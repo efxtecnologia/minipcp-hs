@@ -76,9 +76,9 @@ describe("mergeConfig", () => {
     };
 
     const env = {
-        SRVCFG___AUTH__JWT_EXP_SECS: 550,
+        SRVCFG___AUTH__JWT_EXP_SECS: "550",
         SRVCFG___AUTH__JWT_KEY: "my-real-key",
-        SRVCFG___DATABASES__DEFAULT__PASSWORD: "1234567",
+        SRVCFG___DATABASES__DEFAULT__PASSWORD: "a1234567",
         SRVCFG___DATABASES__SYSTEM__USER: "sys_usr",
         SRVCFG___DATABASES__SYSTEM__HOST: "192.168.10.10",
         SRVCFG___DATABASES__SYSTEM__PASSWORD: "abcdxyz",
@@ -100,7 +100,7 @@ describe("mergeConfig", () => {
                     default: {
                         user: "postgres",
                         host: "localhost",
-                        password: "1234567",
+                        password: "a1234567",
                     },
                     system: {
                         user: "sys_usr",
