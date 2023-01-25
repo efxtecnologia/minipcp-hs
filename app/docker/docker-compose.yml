@@ -19,11 +19,20 @@ services:
       - SRVCFG___DATABASES__DEFAULT__PASSWORD=${DB_DEFAULT_PWD}
     image: "webmrp/minipcp-hs:latest"
     ports:
-      - 3030:${SERVER_PORT}
+      - ${SERVER_PORT}
     # debugging entrypoint - uncomment to debug
     # entrypoint: ["sh", "-c", "sleep 2073600"]
     networks:
       - xdb
+  # nginx
+  nginx:
+    build: ./nginx
+    networks:
+      - xdb
+    ports:
+      - 8888:80
+    depends_on:
+      - api
 
 networks:
   xdb:
