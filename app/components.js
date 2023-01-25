@@ -5,17 +5,11 @@ const _ = require("lodash"),
       Updater = require("./components/updater/index.js"),
       HttpIn = require("./components/http-in.js"),
       Routes = require("./components/routes.js"),
+      Controllers = require("./components/controllers.js"),
       Db = require("./components/db.js"),
       Config = require("./components/config.js"),
       Service = require("./components/service.js"),
       StaticReports = require("./components/static-reports/index.js");
-
-function Controllers() {
-    return {
-        Reports: require("./controllers/reports.js"),
-        FeaturesIndex: require("./features/index.js"),
-    };
-}
 
 const componentSettings = configPath => [
     { name: "crypto", constructor: constantly(require("crypto")), deps: [] },

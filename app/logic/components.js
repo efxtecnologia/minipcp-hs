@@ -28,7 +28,6 @@ function moreComponents(components, componentDefinitions) {
 
     const resolved = withResolvedDeps(components, pending);
     if (resolved.length === 0) {
-        console.log(components);
         return {
             error: "Some components dependencies could not be resolved",
             pending,
