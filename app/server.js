@@ -1,16 +1,15 @@
 const yargs = require("yargs/yargs"),
       { hideBin } = require("yargs/helpers"),
       argv = yargs(hideBin(process.argv)).argv,
-      Components = require("./components.js");
+      System = require("./components.js");
 
 function Server() {
     function run() {
-        const components = Components(argv.config),
-              updater = components.Updater(components),
+        const components = System(argv.config).init(),
               app = components.app,
               port = components.config.serverPort;
 
-        updater.doUpdate();
+        components.updater.doUpdate();
 
         app.listen(port, () => {
             if ( components.config.dockerized ) {
