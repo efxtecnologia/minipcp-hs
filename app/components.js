@@ -1,5 +1,6 @@
 const _ = require("lodash"),
       { constantly } = require("./logic/misc.js"),
+      { moreComponents } = require("./logic/components.js"),
       Auth = require("./components/auth.js"),
       Updater = require("./components/updater/index.js"),
       HttpIn = require("./components/http-in.js"),
@@ -29,54 +30,11 @@ const componentSettings = configPath => [
     { name: "auth", constructor: Auth, deps: ["config", "crypto", "jwt", "db"] },
     { name: "staticReports", constructor: StaticReports, deps: ["config", "db"] },
     { name: "httpIn", constructor: HttpIn, deps: ["config", "auth", "controllers", "staticReports", "db"] },
-    { name: "routes", constructor: Routes, deps: ["httpIn"] },
+    { name: "routes", constructor: Routes, deps: ["config", "httpIn"] },
     { name: "service", constructor: Service, deps: ["config", "app", "express", "router", "auth", "routes"] },
 ];
 
 function System(configPath) {
-
-    function depResolved(components, dep) {
-        return components[dep] !== undefined;
-    }
-
-    const depPending = (components, dep) => ! depResolved(components, dep);
-
-    function depsResolved(components, definition) {
-        return definition => definition.deps.length === 0 ||
-            definition.deps.reduce((ok, dep) => ok && depResolved(components, dep), true);
-    }
-
-    function depsPending(components, definition) {
-        return definition => definition.deps.length > 0 &&
-            definition.deps.reduce((pending, dep) => pending && depPending(components, dep), true);
-    }
-
-    function withResolvedDeps(components, definitions) {
-        return definitions.filter(d => depsResolved(components, d));
-    }
-
-    function withPendingDeps(components, definitions) {
-        return definitions.filter(d => depsPending(components, definitions));
-    }
-
-    function instantiate(components, { name, constructor }) {
-        return { ...components, [name]: constructor(components) };
-    }
-
-    function moreComponents(components, componentDefinitions) {
-        const pending = withPendingDeps(components, componentDefinitions);
-        if (pending.length === 0) {
-            return components;
-        }
-        const resolved = withResolvedDeps(components, pending).reduce(instantiate, components);
-        if (resolved.length === 0) {
-            return {
-                error: "Some components dependencies could not be resolved",
-                pending,
-            };
-        }
-        return moreComponents(resolved.reduce(instantiate, components), componentDefinitions);
-    }
 
     function init() {
         return moreComponents({}, componentSettings(configPath));
