@@ -1,0 +1,55 @@
+const {
+    depResolved,
+    depPending,
+    depsResolved,
+    depsPending,
+    withResolvedDeps,
+    withPendingDeps,
+    moreCompoents
+} = require("../../logic/components.js");
+
+describe("depResolved", () => {
+    it("returns true or false if dependency is satisfied or not in components object", () => {
+        expect(depResolved({}, "x")).toBe(false);
+        expect(depResolved({ x: true }, "x")).toBe(true);
+        expect(depResolved({ x: true }, "y")).toBe(false);
+    });
+});
+
+describe("depPending", () => {
+    it("returns false or true if dependency is satisfied or not in components object", () => {
+        expect(depPending({}, "x")).toBe(true);
+        expect(depPending({ x: true }, "x")).toBe(false);
+        expect(depPending({ x: true }, "y")).toBe(true);
+    });
+});
+
+describe("depsPending", () => {
+    it("returns true if component definition has no satisfied dependencies in components object", () => {
+        expect(depsPending(
+            { componentA: true },
+            { name: "B", constructor: x => x, deps: ["A", "C"] }
+        )).toBe(true);
+    });
+
+    it("returns false if all dependencies are satisfied", () => {
+        expect(depsPending({}, { name: "componentA", constructor: x => x, deps: [] })).toBe(false);
+        expect(depsPending(
+            { componentA: true },
+            { name: "componentB", constructor: x => x, deps: ["componentA"] }
+        )).toBe(false);
+    });
+});
+
+// describe("withPendingDeps", () => {
+//     const definitions = [
+//         { name: "componentA", constructor: x => x, deps: [] },
+//         { name: "componentB", constructor: x => x, deps: ["componentC"] },
+//         { name: "componentC", constructor: x => x, deps: [] },
+//     ];
+
+//     it("returns a list of component definitions with pending dependecies", () => {
+//         expect(withPendingDeps({}, definitions))
+//             .toEqual([{ name: "componentB", constructor: x => x, deps: ["componentC"] }]);
+//     });
+// });

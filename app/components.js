@@ -1,55 +1,42 @@
-const crypto = require("crypto"),
-      express = require("express"),
-      router = express.Router(),
-      jwt = require("jsonwebtoken"),
+const _ = require("lodash"),
+      { constantly } = require("./logic/misc.js"),
+      { moreComponents } = require("./logic/components.js"),
       Auth = require("./components/auth.js"),
       Updater = require("./components/updater/index.js"),
       HttpIn = require("./components/http-in.js"),
       Routes = require("./components/routes.js"),
+      Controllers = require("./components/controllers.js"),
       Db = require("./components/db.js"),
       Config = require("./components/config.js"),
       Service = require("./components/service.js"),
-      StaticReportsIndex = require("./components/static-reports/index.js"),
-      StaticReportsParams = require("./components/static-reports/params.js"),
-      StaticReportsData = require("./components/static-reports/data.js");
+      StaticReports = require("./components/static-reports/index.js");
 
-function Components(configPath) {
-    const config = Config(configPath),
-          controllers = {
-              reports: require("./controllers/reports.js"),
-              FeaturesIndex: require("./features/index.js"),
-          },
-          base = {
-              config,
-              crypto,
-              express,
-              router,
-              jwt,
-              controllers,
-              app: express(),
-              db: Db(config),
-              Updater,
-          },
-          auth = Auth(base),
-          baseStaticReports = {
-              index: StaticReportsIndex(),
-              params: StaticReportsParams(),
-          },
-          staticReports = {
-              ...baseStaticReports,
-              data: StaticReportsData({ ...base, staticReportsParams: baseStaticReports.params }),
-          },
-          httpIn = HttpIn({ ...base, auth, staticReports }),
-          routes = Routes({ ...base, httpIn });
+const componentSettings = configPath => [
+    { name: "crypto", constructor: constantly(require("crypto")), deps: [] },
+    { name: "express", constructor: constantly(require("express")), deps: [] },
+    { name: "router", constructor: require("express").Router, deps: [] },
+    { name: "jwt", constructor: constantly(require("jsonwebtoken")), deps: [] },
+    { name: "app", constructor: require("express"), deps: [] },
+    { name: "config", constructor: _.partial(Config, configPath), deps: [] },
+    { name: "controllers", constructor: Controllers, deps: [] },
+    { name: "db", constructor: Db, deps: ["config"] },
+    { name: "updater", constructor: Updater, deps: ["db"] },
+    { name: "auth", constructor: Auth, deps: ["config", "crypto", "jwt", "db"] },
+    { name: "staticReports", constructor: StaticReports, deps: ["config", "db"] },
+    { name: "httpIn", constructor: HttpIn, deps: ["config", "auth", "controllers", "staticReports", "db"] },
+    { name: "routes", constructor: Routes, deps: ["config", "httpIn"] },
+    { name: "service", constructor: Service, deps: ["config", "app", "express", "router", "auth", "routes"] },
+];
+
+function System(configPath) {
+
+    function init() {
+        return moreComponents({}, componentSettings(configPath));
+    }
 
     return {
-        ...base,
-        auth,
-        httpIn,
-        routes,
-        staticReports,
-        service: Service({ ...base, auth, routes, staticReports }),
+        init,
     };
 }
 
-module.exports = Components;
+module.exports = System;

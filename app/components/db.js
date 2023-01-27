@@ -1,7 +1,7 @@
 const { Pool } = require("pg");
 
-function Db(config, database) {
-    const pool = new Pool(config.database(database));
+function Db({ config }, dbName) {
+    const pool = new Pool(config.database(dbName));
     pool.on("error", (err, client) => {
         console.error("Unexpected error on idle client", err);
     });

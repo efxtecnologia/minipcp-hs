@@ -1,0 +1,39 @@
+version: "3"
+
+# Environment variables are defined at .env
+
+services:
+  # main application
+  api:
+    environment:
+      - SRVCFG___DOCKERIZED=${DOCKERIZED}
+      - SRVCFG___DEBUG=${DEBUG}
+      - SRVCFG___SERVER_PORT=${SERVER_PORT}
+      - SRVCFG___STATIC_ROOT=${STATIC_ROOT}
+      - SRVCFG___AUTH__JWT_EXPIRY_SECONDS=${JWT_EXPIRY_SECONDS}
+      - SRVCFG___AUTH__JWT_KEY=${JWT_KEY}
+      - SRVCFG___DATABASES__DEFAULT__USER=${DB_DEFAULT_USER}
+      - SRVCFG___DATABASES__DEFAULT__HOST=${DB_DEFAULT_HOST}
+      - SRVCFG___DATABASES__DEFAULT__PORT=${DB_DEFAULT_PORT}
+      - SRVCFG___DATABASES__DEFAULT__DATABASE=${DB_DEFAULT_DB}
+      - SRVCFG___DATABASES__DEFAULT__PASSWORD=${DB_DEFAULT_PWD}
+    image: "webmrp/minipcp-hs:latest"
+    ports:
+      - ${SERVER_PORT}
+    # debugging entrypoint - uncomment to debug
+    # entrypoint: ["sh", "-c", "sleep 2073600"]
+    networks:
+      - xdb
+  # nginx
+  nginx:
+    build: ./nginx
+    networks:
+      - xdb
+    ports:
+      - 8888:80
+    depends_on:
+      - api
+
+networks:
+  xdb:
+    external: true

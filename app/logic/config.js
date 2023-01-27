@@ -11,8 +11,13 @@ function envToPath(s) {
     return parts.map(upperSnakeToCamel);
 }
 
+function maybeToNumber(x) {
+    const n = parseFloat(x);
+    return n == x ? n : x;
+}
+
 function pathToObject(path, value) {
-    const newValue = { [path.slice(-1)]: value };
+    const newValue = { [path.slice(-1)]: maybeToNumber(value) };
     if ( path.length > 1 ) {
         return pathToObject(path.slice(0, -1), newValue);
     }

@@ -2,7 +2,7 @@ const jsonResponse = (res, content) => res.type("application/json").json(content
       { toCSV } = require("../adapters/report-data.js");
 
 function HttpIn(components) {
-    const reportControllers = components.controllers.reports(components),
+    const reportControllers = components.controllers.Reports(components),
           featureControllers = components.controllers.FeaturesIndex(components),
           { auth, config } = components;
 

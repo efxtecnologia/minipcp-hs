@@ -19,6 +19,9 @@ function Config(configPath = "./config/config.json") {
     }
 
     return {
+        config,
+        debug: config.debug === "S",
+        dockerized: config.dockerized === "S",
         version,
         auth: config.auth,
         staticRoot: config.staticRoot,
