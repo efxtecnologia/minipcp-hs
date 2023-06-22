@@ -1,17 +1,17 @@
 const _ = require("lodash"),
       { constantly } = require("./logic/misc.js"),
       { moreComponents } = require("./logic/components.js"),
-      Messenger = require("./components/messenger.js"),
-      Cache = require("./components/cache.js"),
       Auth = require("./components/auth.js"),
-      Updater = require("./components/updater/index.js"),
-      HttpIn = require("./components/http-in.js"),
-      Routes = require("./components/routes.js"),
+      Cache = require("./components/cache.js"),
+      Config = require("./components/config.js"),
       Controllers = require("./components/controllers.js"),
       Db = require("./components/db.js"),
-      Config = require("./components/config.js"),
+      HttpIn = require("./components/http-in.js"),
+      Messenger = require("./components/messenger.js"),
+      Routes = require("./components/routes.js"),
       Service = require("./components/service.js"),
-      StaticReports = require("./components/static-reports/index.js");
+      StaticReports = require("./components/static-reports/index.js"),
+      Updater = require("./components/updater/index.js");
 
 const componentSettings = configPath => [
     { name: "crypto", constructor: constantly(require("crypto")), deps: [] },
