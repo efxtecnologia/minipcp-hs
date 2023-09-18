@@ -27,7 +27,8 @@ function FeaturesIndex(components) {
 
     function action(context, req, callback) {
         const action = actions.filter(action => action.id === req.params.id && action.method === req.method)[0];
-        if ( ! action.handler ) {
+        console.log(req.params, req.method);
+        if ( ! action?.handler ) {
             return notFound();
         }
         return action.handler(context, req, callback);

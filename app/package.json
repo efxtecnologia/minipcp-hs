@@ -6,7 +6,8 @@
     "bin": "server.js",
     "scripts": {
         "test": "jest",
-        "dev": "nodemon server.js"
+        "dev": "nodemon server.js",
+        "local-test": "jest $INIT_CWD"
     },
     "author": "hbolzan",
     "license": "ISC",
