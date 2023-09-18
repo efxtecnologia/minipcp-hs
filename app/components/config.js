@@ -4,7 +4,7 @@ const fs = require("fs"),
 
 const envPrefix = "SRVCFG",
       envPrefixSep = "___",
-      version = "221206-01";
+      version = "30904-01";
 
 function Config(configPath = "./config/config.json") {
     const config = mergeConfig(
