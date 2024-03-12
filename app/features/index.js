@@ -3,7 +3,6 @@ const { allowed } = require("./logic/index.js"),
 
 function FeaturesIndex(components) {
     const features = allFeatures(components);
-
     const actions = features.reduce((actions, feature) => actions.concat(feature.actions || []), []);
 
     function notFound() {
