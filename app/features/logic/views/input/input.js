@@ -148,8 +148,6 @@ function dateInput({ id, name, value }) {
 
 
 function checkBoxWithDateRange({ checkBoxField, dateAField, dateBField }) {
-    console.log(dateAField);
-    console.log(dateBField);
     return ["div", { class: ["uk-margin"] },
         ["div",
             ["div", { class: ["uk-inline", "uk-margin-right"] },
