@@ -64,6 +64,15 @@ function someNumPipe() {
     return somePipeRunner(Array.prototype.slice.call(arguments), someNumPipeReducer);
 }
 
+function weekNumber(date) {
+    const d = new Date(date.getTime());
+    const firstDayOfYear = new Date(d.getFullYear(), 0, 1);
+    d.setDate(d.getDate() - d.getDay());
+    const oneDay = (1000 * 60 * 60 * 24);
+    const diff = d - firstDayOfYear;
+    return Math.ceil((diff / oneDay) / 7) + 1;
+}
+
 function dateFromWeekNumber(year, weekNumber) {
     const firstDayOfYear = new Date(year, 0, 1);
     const dayOfWeek = firstDayOfYear.getDay();
@@ -93,5 +102,6 @@ module.exports = {
     arrayIntersection,
     doubleQuoted,
     singleQuotedStr,
+    weekNumber,
     dateFromWeekNumber,
 };

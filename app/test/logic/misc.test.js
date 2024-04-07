@@ -4,6 +4,7 @@ const {
     doubleQuoted,
     singleQuotedStr,
     dateFromWeekNumber,
+    weekNumber,
 } = require("../../logic/misc.js");
 
 describe("somePipe", () => {
@@ -66,6 +67,15 @@ describe("singleQuoted", () => {
 describe("doubleQouted", () => {
     it("quotes strings with double quotes", () => {
         expect(doubleQuoted("abc")).toBe('"abc"');
+    });
+});
+
+describe("weekNumber", () => {
+    it("returns the number of the week in the year for the selected date", () => {
+        expect(weekNumber(new Date(2024, 0, 1))).toBe(1);
+        expect(weekNumber(new Date(2024, 0, 10))).toBe(2);
+        expect(weekNumber(new Date(2024, 0, 16))).toBe(3);
+        expect(weekNumber(new Date(2024, 0, 25))).toBe(4);
     });
 });
 
