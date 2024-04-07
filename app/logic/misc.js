@@ -64,6 +64,13 @@ function someNumPipe() {
     return somePipeRunner(Array.prototype.slice.call(arguments), someNumPipeReducer);
 }
 
+function dateFromWeekNumber(year, weekNumber) {
+    const firstDayOfYear = new Date(year, 0, 1);
+    const dayOfWeek = firstDayOfYear.getDay();
+    const daysToSelectedWeek = (weekNumber - 1) * 7;
+    return new Date(firstDayOfYear.setDate(firstDayOfYear.getDate() + daysToSelectedWeek - dayOfWeek));
+}
+
 const identity = x => x,
       constantly = x => () => x,
       maybeWithDelim = (value, cond, delim) => value + (cond ? delim : ''),
@@ -86,4 +93,5 @@ module.exports = {
     arrayIntersection,
     doubleQuoted,
     singleQuotedStr,
+    dateFromWeekNumber,
 };
