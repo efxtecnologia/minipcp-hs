@@ -1,4 +1,4 @@
-const moment = require("moment");
+const dayjs = require("dayjs");
 const { constantly, assocIf } = require("../../../../logic/misc.js"),
       select = require("./select.js");
 
@@ -127,7 +127,7 @@ function withValue(dateInputAttrs, value) {
     if (! value) {
         return dateInputAttrs;
     }
-    const localDate = moment(value, "YYYY-MM-DD").toDate().toLocaleDateString("pt-BR");
+    const localDate = dayjs(value, "YYYY-MM-DD").toDate().toLocaleDateString("pt-BR");
     return { ...dateInputAttrs, value: localDate };
 }
 

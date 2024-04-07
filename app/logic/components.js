@@ -20,7 +20,7 @@ function instantiate(components, { name, constructor }) {
     return { ...components, [name]: constructor(components) };
 }
 
-function moreComponents(components, componentDefinitions) {
+function resolveDependencies(components, componentDefinitions) {
     const pending = pendingComponents(components, componentDefinitions);
     if (pending.length === 0) {
         return components;
@@ -34,12 +34,12 @@ function moreComponents(components, componentDefinitions) {
         };
     }
 
-    return moreComponents(resolved.reduce(instantiate, components), componentDefinitions);
+    return resolveDependencies(resolved.reduce(instantiate, components), componentDefinitions);
 }
 
 module.exports = {
     depResolved,
     depsResolved,
     withResolvedDeps,
-    moreComponents,
+    resolveDependencies,
 };
