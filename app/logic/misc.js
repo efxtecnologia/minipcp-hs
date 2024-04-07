@@ -64,6 +64,13 @@ function someNumPipe() {
     return somePipeRunner(Array.prototype.slice.call(arguments), someNumPipeReducer);
 }
 
+function dayOfYear(date) {
+    const startOfYear = new Date(date.getFullYear(), 0, 1);
+    const diff = date - startOfYear;
+    const oneDay = 1000 * 60 * 60 * 24;
+    return Math.floor(diff / oneDay) + 1;
+}
+
 function weekNumber(date) {
     const d = new Date(date.getTime());
     const firstDayOfYear = new Date(d.getFullYear(), 0, 1);
@@ -102,6 +109,7 @@ module.exports = {
     arrayIntersection,
     doubleQuoted,
     singleQuotedStr,
+    dayOfYear,
     weekNumber,
     dateFromWeekNumber,
 };
