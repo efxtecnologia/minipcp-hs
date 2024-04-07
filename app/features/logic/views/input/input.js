@@ -1,4 +1,4 @@
-const dayjs = require("dayjs");
+const dayjs = require("dayjs-with-plugins");
 const { constantly, assocIf } = require("../../../../logic/misc.js"),
       select = require("./select.js");
 

@@ -3,7 +3,7 @@ const { trimLeft, maybeWithDelim, maybeWithSpace, assocIf, identity, somePipe, s
       isSqlLine = s => ! s.startsWith("#"),
       looksLikeFieldDefLine = s => s.split(":").length >= 4,
       findField = (fieldsInfo, fieldName) => fieldsInfo.filter(i => i.name === fieldName)[0],
-      dayjs = require("dayjs"),
+      dayjs = require("dayjs-with-plugins"),
       _ = require("lodash");
 
 const dataTypesTranslations = [

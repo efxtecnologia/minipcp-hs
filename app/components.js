@@ -14,7 +14,7 @@ const _ = require("lodash"),
       StaticReports = require("./components/static-reports/index.js");
 
 const componentSettings = configPath => [
-    { name: "dayjs", constructor: constantly(require("dayjs")), deps: [] },
+    { name: "dayjs", constructor: constantly(require("dayjs-with-plugins")), deps: [] },
     { name: "crypto", constructor: constantly(require("crypto")), deps: [] },
     { name: "express", constructor: constantly(require("express")), deps: [] },
     { name: "router", constructor: require("express").Router, deps: [] },
