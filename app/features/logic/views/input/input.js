@@ -1,3 +1,4 @@
+const dayjs = require("dayjs-with-plugins");
 const { constantly, assocIf } = require("../../../../logic/misc.js"),
       select = require("./select.js");
 
@@ -9,6 +10,7 @@ const fieldTypes = {
     date: "date",
     file: "file",
     checkBox: "checkBox",
+    checkBoxWithDateRange: "checkBoxWithDateRange",
     radioGroup: "radioGroup",
     select: "select",
 };
@@ -117,23 +119,45 @@ function checkBoxOptions({ id, name, options }) {
 
 function checkBox(field) {
     return ["div", { class: ["uk-form-controls"] },
-            ["label",
-             ["input", checkBoxOptions(field)],
-             ["span", { class: ["uk-text-bold", "uk-margin-left"] }, field.caption]]];
+            ["input", checkBoxOptions(field)],
+            ["span", { class: ["uk-text-bold", "uk-margin-left"] }, field.caption]];
 }
 
-function dateInput({ id, name }) {
+function withValue(dateInputAttrs, value) {
+    if (! value) {
+        return dateInputAttrs;
+    }
+    const localDate = dayjs(value, "YYYY-MM-DD").toDate().toLocaleDateString("pt-BR");
+    return { ...dateInputAttrs, value: localDate };
+}
+
+function dateInput({ id, name, value }) {
+    const attrs = {
+        id,
+        name,
+        class: ["uk-input"],
+        type: "text",
+        dataSubType: "date",
+        style: { cursor: "pointer" },
+        private: { init: { DatePicker: true } },
+    };
     return ["div", { class: ["uk-inline"]},
-            ["input", {
-                id,
-                name,
-                class: ["uk-input"],
-                type: "text",
-                dataSubType: "date",
-                style: { cursor: "pointer" },
-                private: { init: { DatePicker: true } },
-            }],
+            ["input", withValue(attrs, value)],
             ["span", { class: ["uk-form-icon", "uk-form-icon-flip"], ukIcon: "calendar" }]];
+}
+
+
+function checkBoxWithDateRange({ checkBoxField, dateAField, dateBField }) {
+    return ["div", { class: ["uk-margin"] },
+        ["div",
+            ["div", { class: ["uk-inline", "uk-margin-right"] },
+                checkBox(checkBoxField)],
+            ["div", { class: ["uk-inline", "uk-margin-right"] },
+             ["span", { class: ["uk-text-bold"] }, "de &nbsp;"],
+                dateInput(dateAField)],
+            ["div", { class: ["uk-inline"] },
+             ["span", { class: ["uk-text-bold"] }, "a &nbsp;"],
+                dateInput(dateBField)]]];
 }
 
 function fileUpload({ id, name, label, progressBarId, receiveUploadActionId }) {
@@ -157,6 +181,7 @@ const inputs = {
     [fieldTypes.date]: dateInput,
     [fieldTypes.radioGroup]: radioGroup,
     [fieldTypes.checkBox]: checkBox,
+    [fieldTypes.checkBoxWithDateRange]: checkBoxWithDateRange,
     [fieldTypes.select]: select,
     [fieldTypes.file]: fileUpload,
 };
@@ -166,7 +191,7 @@ function formInput(field) {
 }
 
 function showLabel({ type }) {
-    return type !== "ptCheckBox";
+    return type !== fieldTypes.checkBox && type !== fieldTypes.checkBoxWithDateRange;
 }
 
 function formField(field, classes = ["uk-margin"], attrs = {}) {

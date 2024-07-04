@@ -2,7 +2,7 @@ const { arrayIntersection } = require("../../logic/misc.js");
 
 function hasScopes(req, feature, scopeType) {
     const requestedScopes = feature[scopeType];
-    return ( ! requestedScopes ) ||
+    return ((requestedScopes || []).length === 0) ||
         (arrayIntersection([...requestedScopes, "dev"], req.auth.scopes).length > 0);
 }
 

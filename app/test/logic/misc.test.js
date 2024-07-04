@@ -1,4 +1,11 @@
-const { somePipe, someNumPipe, doubleQuoted, singleQuotedStr, } = require("../../logic/misc.js");
+const {
+    somePipe,
+    someNumPipe,
+    doubleQuoted,
+    singleQuotedStr,
+    dateFromWeekNumber,
+    weekNumber,
+} = require("../../logic/misc.js");
 
 describe("somePipe", () => {
     const fnA = jest.fn(),
@@ -60,5 +67,23 @@ describe("singleQuoted", () => {
 describe("doubleQouted", () => {
     it("quotes strings with double quotes", () => {
         expect(doubleQuoted("abc")).toBe('"abc"');
+    });
+});
+
+describe("weekNumber", () => {
+    it("returns the number of the week in the year for the selected date", () => {
+        expect(weekNumber(new Date(2024, 0, 1))).toBe(1);
+        expect(weekNumber(new Date(2024, 0, 10))).toBe(2);
+        expect(weekNumber(new Date(2024, 0, 16))).toBe(3);
+        expect(weekNumber(new Date(2024, 0, 25))).toBe(4);
+    });
+});
+
+describe("dateFromWeekNumber", () => {
+    it("returns the Sunday date for the selected week in the year", () => {
+        expect(dateFromWeekNumber(2025, 1)).toStrictEqual(new Date(2024, 11, 29));
+        expect(dateFromWeekNumber(2024, 1)).toStrictEqual(new Date(2023, 11, 31));
+        expect(dateFromWeekNumber(2023, 1)).toStrictEqual(new Date(2023, 0, 1));
+        expect(dateFromWeekNumber(2022, 1)).toStrictEqual(new Date(2021, 11, 26));
     });
 });

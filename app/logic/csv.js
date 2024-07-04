@@ -1,4 +1,4 @@
-const moment = require("moment"),
+const dayjs = require("dayjs"),
       { doubleQuoted, identity } = require("./misc.js"),
       { findField, typeTranslation } = require("./reports.js");
 

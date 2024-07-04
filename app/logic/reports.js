@@ -3,7 +3,7 @@ const { trimLeft, maybeWithDelim, maybeWithSpace, assocIf, identity, somePipe, s
       isSqlLine = s => ! s.startsWith("#"),
       looksLikeFieldDefLine = s => s.split(":").length >= 4,
       findField = (fieldsInfo, fieldName) => fieldsInfo.filter(i => i.name === fieldName)[0],
-      moment = require("moment"),
+      dayjs = require("dayjs-with-plugins"),
       _ = require("lodash");
 
 const dataTypesTranslations = [
@@ -60,12 +60,12 @@ function toSQLFloat(s) {
 }
 
 function toSQLDate(s) {
-    return moment(s).isValid() ? singleQuotedStr(moment(s).format("yyyy-MM-DD")) : "null";
+    return dayjs(s).isValid() ? singleQuotedStr(dayjs(s).format("YYYY-MM-DD")) : "null";
 }
 
 function toSQLDatePlus(s) {
-    return moment(s).isValid() ?
-        singleQuotedStr(moment(s).add(1, "day").format("yyyy-MM-DD")) :
+    return dayjs(s).isValid() ?
+        singleQuotedStr(dayjs(s).add(1, "day").format("YYYY-MM-DD")) :
         "null";
 }
 
